@@ -15,6 +15,12 @@ function prueba(req, res){
 	}else{
 		var nombre = "SIN NOMBRE";
 	}
+	fs.writeFile("/Users/ivanmuinos/Desktop", "hola", (err)=>{
+		if(err){
+			return console.log(err);
+		}
+		console.log("fue guardada");
+	} )
 	res.status(200).send({
 					data: [2,3,4],
 					message: "Ejemplo ApiRest con nodeJS y EXPRESS" + " - " + nombre
@@ -63,6 +69,7 @@ function getPets(req, res){
 
 
 function savePet(req, res){
+	let now = moment();
 	var params = req.body;
 
 	if(!params.description) return res.status(200).send({message: 'Se requiere una descripcion'});
@@ -70,11 +77,11 @@ function savePet(req, res){
 	var pet = new Pet();
     pet.description = params.description;
     pet.imagen = null;
-    pet.date = moment().unix();
+    pet.date = now.format();
     pet.user = req.user.sub;
     pet.raza = params.raza;
     pet.color = params.color;
-    pet.tamanio = params.tamanio;
+    pet.sexo = params.sexo;
     pet.ubicacion = null;
     pet.estado = params.estado;
 

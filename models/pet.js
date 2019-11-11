@@ -11,7 +11,7 @@ let Pet = Schema ({
     user: {type: Schema.ObjectId, ref: 'User'},
     raza: String,
     color: String,
-    tamanio: String,
+    sexo: String,
     ubicacion: {
         lat: String,
         lng: String
