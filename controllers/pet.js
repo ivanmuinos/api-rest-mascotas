@@ -82,7 +82,7 @@ function savePet(req, res){
     pet.raza = params.raza;
     pet.color = params.color;
     pet.sexo = params.sexo;
-    pet.ubicacion = null;
+    pet.ubicacion = params.ubicacion;
     pet.estado = params.estado;
 
 	pet.save((err, petStored) => {
