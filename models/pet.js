@@ -17,6 +17,14 @@ let Pet = Schema ({
         lng: String
     },
     estado: String,
+    comment:[
+        {
+            date:String,
+            user:String,
+            text:String,
+        }
+
+    ]
 });
 
 

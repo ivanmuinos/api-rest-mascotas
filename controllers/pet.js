@@ -159,6 +159,7 @@ function updatePet(req, res){
 function deletePet(req, res){
 	var favoritoId = req.params.id;
 
+	var comment = req.
 	Favorito.findById(favoritoId, function(err, favorito){
 		if(err){
 			res.status(500).send({message: 'Error al devolver los marcadores'});
@@ -179,6 +180,25 @@ function deletePet(req, res){
 	
 }
 
+function addComment(req, res){
+	let now = moment();
+	var params = req.body;
+	var petId = req.params.id;
+
+	var comment = { date: now.format(), user: req.user.sub, text: params.text};
+
+	Pet.findOne({
+		_id: petId
+	}).exec( (err, pet) =>{
+		if(err) return res.status(500).send({message: 'Error en la peticion'});
+		if(!pet) res.status(404).send({message: 'No hay mascota para agregar comentario'});
+		pet.comment.push(comment);
+		pet.save(res);
+		return res.status(200).send({pet});
+	})
+
+}
+
 module.exports = {
 	prueba,
 	getPets,
@@ -188,5 +208,6 @@ module.exports = {
 	deletePet,
 	getPetsOfUser,
 	uploadImagePet,
-	getImageFile
+	getImageFile,
+	addComment
 }
