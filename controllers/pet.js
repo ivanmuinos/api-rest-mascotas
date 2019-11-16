@@ -185,7 +185,11 @@ function addComment(req, res){
 	var params = req.body;
 	var petId = req.params.id;
 
-	var comment = { date: now.format(), user: req.user.sub, text: params.text};
+	var comment = { 
+		date: now.format(), 
+		user: req.user.sub, 
+		text: params.text
+	};
 
 	Pet.findOne({
 		_id: petId
