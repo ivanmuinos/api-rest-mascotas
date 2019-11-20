@@ -187,7 +187,7 @@ function addComment(req, res){
 
 	var comment = { 
 		date: now.format(), 
-		user: req.user.sub, 
+		user: params.username,
 		text: params.text
 	};
 
@@ -198,7 +198,7 @@ function addComment(req, res){
 		if(!pet) res.status(404).send({message: 'No hay mascota para agregar comentario'});
 		pet.comment.push(comment);
 		pet.save(res);
-		return res.status(200).send({pet});
+		return res.status(200).send({comment});
 	})
 
 }

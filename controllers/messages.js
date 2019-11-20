@@ -14,7 +14,7 @@ function probando(req, res){
 //Enviar un mensaje
 function saveMessage(req, res){
     var params = req.body;
-
+    console.log(params.text);
     if(!params.text || !params.receiver)  res.status(200).send({message: 'Envia los datos necesarios'});
        
     var message = new Message();
@@ -23,6 +23,8 @@ function saveMessage(req, res){
     message.text = params.text;
     message.created_at = moment().unix();
     message.viewed = false;
+
+    console.log(message);
 
     message.save((err, messageStored) => {
         if(err) return res.status(500).send({message: 'Error en la peticion'});
@@ -40,7 +42,7 @@ function getReceivedMessages(req, res){
         page = req.params.page;
     }
 
-    var itemsPerPage = 10;
+    var itemsPerPage = 50;
 
     Message.find({receiver: userId}).populate('emmiter').paginate(page, itemsPerPage, (err, messages, total) => {
         if(err) return res.status(500).send({message: 'Error en la peticion'});
@@ -52,6 +54,15 @@ function getReceivedMessages(req, res){
         });
     });
 
+}
+
+function getSpecificReceivedMessage(req, res){
+    var idMessage = req.params.id;
+    Message.findById(idMessage, (err, message) => {
+        if(err) return res.status(500).send({message: 'Error en la peticion'});
+        if(!message) return res.status(404).send({message: 'No hay mensajes para mostrar'});
+        return res.status(200).send({message});
+    })
 }
 
 //obtener mensajes enviados
@@ -107,5 +118,6 @@ module.exports = {
     getReceivedMessages,
     getEmmitedMessages,
     getUnviewedMessages,
-    setViewedMessages
+    setViewedMessages,
+    getSpecificReceivedMessage
 }

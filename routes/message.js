@@ -11,5 +11,6 @@ api.get('/my-messages',md_auth.ensureAuth, MessageController.getReceivedMessages
 api.get('/messages',md_auth.ensureAuth, MessageController.getEmmitedMessages);
 api.get('/unviewed-messages', md_auth.ensureAuth, MessageController.getUnviewedMessages);
 api.get('/set-viewed-messages', md_auth.ensureAuth, MessageController.setViewedMessages);
+api.get('/my-messages/:id', md_auth.ensureAuth, MessageController.getSpecificReceivedMessage);
 
 module.exports = api; 

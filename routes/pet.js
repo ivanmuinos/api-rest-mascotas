@@ -13,11 +13,12 @@ api.get('/prueba/:nombre?', PetController.prueba);
 api.get('/pet/:id', PetController.getPet);
 api.get('/pet', PetController.getPets);
 api.get('/pet-user', md_auth.ensureAuth, PetController.getPetsOfUser);
+api.get('/get-image-pet/:imageFile', PetController.getImageFile);
 api.post('/pet',md_auth.ensureAuth, PetController.savePet);
 api.put('/pet/:id', PetController.updatePet);
 api.post('/upload-image-pet/:id', [md_auth.ensureAuth, md_upload], PetController.uploadImagePet);
 api.post('/add-comment/:id',md_auth.ensureAuth, PetController.addComment);
 api.delete('/pet/:id', PetController.deletePet);
-api.get('/get-image-pet/:imageFile', PetController.getImageFile);
+
 
 module.exports = api;
