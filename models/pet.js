@@ -9,6 +9,8 @@ let Pet = Schema ({
     imagen: String,
     date: String,
     user: {type: Schema.ObjectId, ref: 'User'},
+    owner: {type: Schema.ObjectId, ref: 'User'},
+    estado: String,
     raza: String,
     color: String,
     sexo: String,
@@ -16,7 +18,6 @@ let Pet = Schema ({
         lat: String,
         lng: String
     },
-    estado: String,
     comment:[
         {
             date:String,

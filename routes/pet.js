@@ -12,6 +12,8 @@ var md_upload = multipart( { uploadDir: './uploads/pets'} );
 api.get('/prueba/:nombre?', PetController.prueba);
 api.get('/pet/:id', PetController.getPet);
 api.get('/pet', PetController.getPets);
+api.get('/pet-lost', PetController.getPetsLost);
+api.get('/pet-found', PetController.getPetsFound);
 api.get('/pet-user', md_auth.ensureAuth, PetController.getPetsOfUser);
 api.get('/get-image-pet/:imageFile', PetController.getImageFile);
 api.post('/pet',md_auth.ensureAuth, PetController.savePet);

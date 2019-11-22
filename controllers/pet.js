@@ -52,8 +52,38 @@ function getPetsOfUser(req, res){
 	});
 }
 
-function getPets(req, res){
+function getPets(req, res){     
 	Pet.find({}).sort('-_id').exec((err, pets) => {
+		if(err){
+			res.status(500).send({message: 'Error al devolver los mascotas'});
+		}else{
+			if (!pets){
+				res.status(404).send({message: 'No hay mascotas'});
+			}else{
+				res.status(200).send({pets});
+			}
+		}
+	});
+	
+}
+
+function getPetsLost(req, res){     
+	Pet.find({estado:"L"}).sort('-_id').exec((err, pets) => {
+		if(err){
+			res.status(500).send({message: 'Error al devolver los mascotas'});
+		}else{
+			if (!pets){
+				res.status(404).send({message: 'No hay mascotas'});
+			}else{
+				res.status(200).send({pets});
+			}
+		}
+	});
+	
+}
+
+function getPetsFound(req, res){     
+	Pet.find({estado:"F"}).sort('-_id').exec((err, pets) => {
 		if(err){
 			res.status(500).send({message: 'Error al devolver los mascotas'});
 		}else{
@@ -213,5 +243,7 @@ module.exports = {
 	getPetsOfUser,
 	uploadImagePet,
 	getImageFile,
-	addComment
+	addComment,
+	getPetsLost,
+	getPetsFound
 }
