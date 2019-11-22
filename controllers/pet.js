@@ -113,7 +113,7 @@ function savePet(req, res){
     pet.color = params.color;
     pet.sexo = params.sexo;
     pet.ubicacion = params.ubicacion;
-    pet.estado = params.estado;
+    pet.estado = "L";
 
 	pet.save((err, petStored) => {
 		if(err) return res.status(500).send({message: 'Error al guardar la mascota'});
@@ -247,3 +247,4 @@ module.exports = {
 	getPetsLost,
 	getPetsFound
 }
+
