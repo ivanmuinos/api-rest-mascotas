@@ -83,7 +83,7 @@ function getPetsLost(req, res){
 }
 
 function getPetsFound(req, res){     
-	Pet.find({estado:"F"}).sort('-_id').exec((err, pets) => {
+	Pet.find({estado:"Encontrado"}).sort('-_id').exec((err, pets) => {
 		if(err){
 			res.status(500).send({message: 'Error al devolver los mascotas'});
 		}else{
@@ -113,7 +113,7 @@ function savePet(req, res){
     pet.color = params.color;
     pet.sexo = params.sexo;
     pet.ubicacion = params.ubicacion;
-    pet.estado = "L";
+    pet.estado = "Perdido";
 
 	pet.save((err, petStored) => {
 		if(err) return res.status(500).send({message: 'Error al guardar la mascota'});
@@ -233,6 +233,27 @@ function addComment(req, res){
 
 }
 
+function changeStateOfPet(req, res){
+	let petId = req.params.id;
+	console.log(petId);
+	Pet.findByIdAndUpdate(petId, {estado:"Encontrado"}, {upsert:true}, (err, updated) => {
+		if(err) return res.status(500).send({message: 'Error en la peticion'});
+		if(!updated) res.status(404).send({message: 'No hay mascota para cambiar el estado'});
+		return res.status(200).send({updated});
+	})
+}
+
+function searchPet(req, res){
+	var pet_raza = req.params.id;
+
+	Pet.find({raza: { $regex: pet_raza, $options: 'i'}}).exec( (err, pet) =>{
+	
+		if(err) return res.status(500).send({message: 'Error en la peticion'});
+		if(!pet) res.status(404).send({message: 'No hay resultados'});
+		return res.status(200).send({pet});
+	})
+}
+
 module.exports = {
 	prueba,
 	getPets,
@@ -245,6 +266,8 @@ module.exports = {
 	getImageFile,
 	addComment,
 	getPetsLost,
-	getPetsFound
+	getPetsFound,
+	changeStateOfPet,
+	searchPet
 }
 

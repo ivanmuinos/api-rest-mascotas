@@ -18,8 +18,10 @@ api.get('/pet-user', md_auth.ensureAuth, PetController.getPetsOfUser);
 api.get('/get-image-pet/:imageFile', PetController.getImageFile);
 api.post('/pet',md_auth.ensureAuth, PetController.savePet);
 api.put('/pet/:id', PetController.updatePet);
+api.put('/change-state/:id',md_auth.ensureAuth, PetController.changeStateOfPet);
 api.post('/upload-image-pet/:id', [md_auth.ensureAuth, md_upload], PetController.uploadImagePet);
 api.post('/add-comment/:id',md_auth.ensureAuth, PetController.addComment);
+api.get('/search-pet/:id', PetController.searchPet);
 api.delete('/pet/:id', PetController.deletePet);
 
 
